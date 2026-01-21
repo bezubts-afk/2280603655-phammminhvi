@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sản Phẩm</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            border-left: 5px solid #667eea;
+            padding-left: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .price {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .status-available {
+            color: #27ae60;
+            background: #d5f4e6;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        
+        .status-unavailable {
+            color: #e74c3c;
+            background: #fadbd8;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        
+        .category {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        .category.electronics {
+            background: #bee3f8;
+            color: #2c5aa0;
+        }
+        
+        .category.accessories {
+            background: #feebc8;
+            color: #c05621;
+        }
+        
+        .info-box {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            color: #333;
+        }
+        
+        .info-box.warning {
+            background: #fff5f5;
+            border-left-color: #e74c3c;
+            color: #c0392b;
+        }
+        
+        .info-box.success {
+            background: #f0fdf4;
+            border-left-color: #27ae60;
+            color: #1e5631;
+        }
+        
+        .total-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .list-item {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f9f9f9;
+            border-left: 3px solid #667eea;
+            border-radius: 3px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📦 QUẢN LÝ SẢN PHẨM</h1>
+        <p class="subtitle">Hệ Thống Quản Lý Kho Hàng Điện Tử</p>
+        
+        <!-- CÂU 1 & 2 -->
+        <div class="section">
+            <div class="section-title">📋 Câu 1 & 2: Danh Sách Tất Cả Sản Phẩm</div>
+            <table id="table-all-products">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Giá</th>
+                        <th>Số Lượng</th>
+                        <th>Danh Mục</th>
+                        <th>Trạng Thái</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-all"></tbody>
+            </table>
+            <div class="info-box">
+                ✓ Constructor Function Product đã được tạo thành công
+            </div>
+        </div>
+        
+        <!-- CÂU 3 -->
+        <div class="section">
+            <div class="section-title">3️⃣ Câu 3: Chi Nhánh Mới (Name, Price)</div>
+            <table id="table-simple-products">
+                <thead>
+                    <tr>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Giá</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-simple"></tbody>
+            </table>
+        </div>
+        
+        <!-- CÂU 4 -->
+        <div class="section">
+            <div class="section-title">4️⃣ Câu 4: Sản Phẩm Còn Hàng (Quantity > 0)</div>
+            <table id="table-available">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Số Lượng</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-available"></tbody>
+            </table>
+            <div class="info-box" id="info-available"></div>
+        </div>
+        
+        <!-- CÂU 5 -->
+        <div class="section">
+            <div class="section-title">5️⃣ Câu 5: Sản Phẩm Có Giá >= 30.000.000</div>
+            <div id="info-expensive"></div>
+        </div>
+        
+        <!-- CÂU 6 -->
+        <div class="section">
+            <div class="section-title">6️⃣ Câu 6: Kiểm Tra Sản Phẩm Danh Mục "Accessories"</div>
+            <table id="table-accessories">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>isAvailable</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-accessories"></tbody>
+            </table>
+            <div id="info-accessories"></div>
+        </div>
+        
+        <!-- CÂU 7 -->
+        <div class="section">
+            <div class="section-title">7️⃣ Câu 7: Tính Tổng Giá Trị Kho Hàng</div>
+            <table id="table-inventory">
+                <thead>
+                    <tr>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Giá</th>
+                        <th>Số Lượng</th>
+                        <th>Tổng Giá Trị</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-inventory"></tbody>
+            </table>
+            <div class="total-value" id="total-value"></div>
+        </div>
+        
+        <!-- CÂU 8 -->
+        <div class="section">
+            <div class="section-title">8️⃣ Câu 8: Duyệt Mảng Dùng for...of</div>
+            <div id="info-forof"></div>
+        </div>
+        
+        <!-- CÂU 9 -->
+        <div class="section">
+            <div class="section-title">9️⃣ Câu 9: Duyệt Thuộc Tính Dùng for...in</div>
+            <div id="info-forin"></div>
+        </div>
+        
+        <!-- CÂU 10 -->
+        <div class="section">
+            <div class="section-title">🔟 Câu 10: Danh Sách Sản Phẩm Đang Bán & Còn Hàng</div>
+            <div id="info-product-names"></div>
+        </div>
+        
+        <div class="footer">
+            <p>Bài Tập JavaScript - Quản Lý Sản Phẩm | Khóa Học Lập Trình</p>
+        </div>
+    </div>
+
+    <script>
+        // ===== Constructor Function Product =====
+        function Product(id, name, price, quantity, category, isAvailable) {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+            this.quantity = quantity;
+            this.category = category;
+            this.isAvailable = isAvailable;
+        }
+
+        // ===== Khởi tạo mảng products =====
+        const products = [
+            new Product(1, 'Laptop Dell XPS 13', 25000000, 5, 'Electronics', true),
+            new Product(2, 'iPhone 15 Pro', 32000000, 3, 'Electronics', true),
+            new Product(3, 'Samsung Galaxy S24', 28000000, 7, 'Electronics', true),
+            new Product(4, 'Tai nghe Bluetooth Sony', 4500000, 12, 'Accessories', true),
+            new Product(5, 'Chuột Gaming Razer', 2500000, 8, 'Accessories', true),
+            new Product(6, 'Bàn phím Cơ Corsair', 3200000, 0, 'Accessories', false),
+            new Product(7, 'Monitor LG 27 inch', 8500000, 4, 'Electronics', true),
+            new Product(8, 'Đế laptop Stand', 1200000, 15, 'Accessories', true),
+        ];
+
+        // Hàm format tiền
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(price);
+        }
+
+        function getCategoryClass(category) {
+            return category === 'Electronics' ? 'electronics' : 'accessories';
+        }
+
+        // ===== Câu 1 & 2: Hiển thị tất cả sản phẩm =====
+        const tbodyAll = document.getElementById('tbody-all');
+        products.forEach(p => {
+            const row = `<tr>
+                <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td class="price">${formatPrice(p.price)}</td>
+                <td>${p.quantity}</td>
+                <td><span class="category ${getCategoryClass(p.category)}">${p.category}</span></td>
+                <td><span class="${p.isAvailable ? 'status-available' : 'status-unavailable'}">${p.isAvailable ? '✓ Còn bán' : '✗ Hết bán'}</span></td>
+            </tr>`;
+            tbodyAll.innerHTML += row;
+        });
+
+        // ===== Câu 3: Chi nhánh name, price =====
+        const productSimple = products.map(p => ({ name: p.name, price: p.price }));
+        const tbodySimple = document.getElementById('tbody-simple');
+        productSimple.forEach(p => {
+            const row = `<tr>
+                <td>${p.name}</td>
+                <td class="price">${formatPrice(p.price)}</td>
+            </tr>`;
+            tbodySimple.innerHTML += row;
+        });
+
+        // ===== Câu 4: Sản phẩm còn hàng =====
+        const availableProducts = products.filter(p => p.quantity > 0);
+        const tbodyAvailable = document.getElementById('tbody-available');
+        availableProducts.forEach(p => {
+            const row = `<tr>
+                <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td><strong>${p.quantity}</strong></td>
+            </tr>`;
+            tbodyAvailable.innerHTML += row;
+        });
+        document.getElementById('info-available').innerHTML = 
+            `✓ Tổng số sản phẩm còn hàng: <strong>${availableProducts.length}</strong>`;
+
+        // ===== Câu 5: Sản phẩm có giá >= 30.000.000 =====
+        const expensiveProducts = products.filter(p => p.price >= 30000000);
+        const infoExpensive = document.getElementById('info-expensive');
+        if (expensiveProducts.length > 0) {
+            let html = '<div class="info-box success">✓ Có sản phẩm có giá >= 30.000.000:<br><br>';
+            expensiveProducts.forEach(p => {
+                html += `<div class="list-item">• ${p.name}: ${formatPrice(p.price)}</div>`;
+            });
+            html += '</div>';
+            infoExpensive.innerHTML = html;
+        } else {
+            infoExpensive.innerHTML = '<div class="info-box warning">✗ Không có sản phẩm nào có giá >= 30.000.000</div>';
+        }
+
+        // ===== Câu 6: Kiểm tra danh mục Accessories =====
+        const accessoriesProducts = products.filter(p => p.category === 'Accessories');
+        const allAccessoriesAvailable = accessoriesProducts.every(p => p.isAvailable === true);
+        const tbodyAccessories = document.getElementById('tbody-accessories');
+        accessoriesProducts.forEach(p => {
+            const row = `<tr>
+                <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td><span class="${p.isAvailable ? 'status-available' : 'status-unavailable'}">${p.isAvailable ? '✓ True' : '✗ False'}</span></td>
+            </tr>`;
+            tbodyAccessories.innerHTML += row;
+        });
+        const infoAccessories = document.getElementById('info-accessories');
+        const accessoriesMsg = allAccessoriesAvailable ? 
+            '✓ TẤT CẢ sản phẩm Accessories có isAvailable = true' : 
+            '✗ KHÔNG phải tất cả sản phẩm Accessories có isAvailable = true';
+        infoAccessories.innerHTML = `<div class="info-box ${allAccessoriesAvailable ? 'success' : 'warning'}">${accessoriesMsg}</div>`;
+
+        // ===== Câu 7: Tính tổng giá trị kho hàng =====
+        const totalValue = products.reduce((sum, p) => sum + (p.price * p.quantity), 0);
+        const tbodyInventory = document.getElementById('tbody-inventory');
+        products.forEach(p => {
+            const value = p.price * p.quantity;
+            const row = `<tr>
+                <td>${p.name}</td>
+                <td class="price">${formatPrice(p.price)}</td>
+                <td>${p.quantity}</td>
+                <td class="price">${formatPrice(value)}</td>
+            </tr>`;
+            tbodyInventory.innerHTML += row;
+        });
+        document.getElementById('total-value').innerHTML = 
+            `💰 Tổng giá trị kho hàng: <strong>${formatPrice(totalValue)}</strong>`;
+
+        // ===== Câu 8: Duyệt for...of =====
+        let htmlForOf = '';
+        for (const product of products) {
+            const status = product.isAvailable ? 'Còn bán' : 'Hết bán';
+            htmlForOf += `<div class="list-item">
+                <strong>${product.id}. ${product.name}</strong><br>
+                Danh mục: <span class="category ${getCategoryClass(product.category)}">${product.category}</span> | 
+                Trạng thái: ${status}
+            </div>`;
+        }
+        document.getElementById('info-forof').innerHTML = htmlForOf;
+
+        // ===== Câu 9: Duyệt for...in =====
+        const firstProduct = products[0];
+        let htmlForIn = `<div class="info-box"><strong>Thuộc tính của sản phẩm: ${firstProduct.name}</strong><br><br>`;
+        for (const key in firstProduct) {
+            let value = firstProduct[key];
+            if (typeof value === 'number' && key === 'price') {
+                value = formatPrice(value);
+            }
+            htmlForIn += `<div class="list-item"><strong>${key}:</strong> ${value}</div>`;
+        }
+        htmlForIn += '</div>';
+        document.getElementById('info-forin').innerHTML = htmlForIn;
+
+        // ===== Câu 10: Danh sách sản phẩm đang bán & còn hàng =====
+        const availableProductNames = products
+            .filter(p => p.isAvailable === true && p.quantity > 0)
+            .map(p => p.name);
+        let htmlNames = `<div class="info-box success">
+            <strong>📝 Danh sách sản phẩm đang bán và còn hàng: (${availableProductNames.length} sản phẩm)</strong><br><br>`;
+        availableProductNames.forEach((name, index) => {
+            htmlNames += `<div class="list-item">${index + 1}. ${name}</div>`;
+        });
+        htmlNames += '</div>';
+        document.getElementById('info-product-names').innerHTML = htmlNames;
+    </script>
+</body>
+</html>
