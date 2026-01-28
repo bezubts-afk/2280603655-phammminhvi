@@ -1,15 +1,77 @@
 {
   "$schema": "./node_modules/json-server/schema.json",
   "posts": [
-    { "id": "1", "title": "a title", "views": 100, "isDeleted": false },
-    { "id": "2", "title": "another title", "views": 200, "isDeleted": false }
+    {
+      "id": "1",
+      "title": "a title",
+      "views": 100,
+      "isDeleted": false
+    },
+    {
+      "id": "2",
+      "title": "another title",
+      "views": 200,
+      "isDeleted": false
+    },
+    {
+      "id": "3",
+      "title": "Hướng dẫn JavaScript cơ bản",
+      "views": 500,
+      "isDeleted": false
+    },
+    {
+      "id": "4",
+      "title": "Làm việc với API REST",
+      "views": 350,
+      "isDeleted": false
+    },
+    {
+      "id": "5",
+      "title": "Tips CSS hiệu quả",
+      "views": 280,
+      "isDeleted": false
+    }
   ],
   "comments": [
-    { "id": "1", "text": "a comment about post 1", "postId": "1", "isDeleted": false },
-    { "id": "2", "text": "another comment about post 1", "postId": "1", "isDeleted": false }
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1",
+      "isDeleted": true
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1",
+      "isDeleted": true
+    },
+    {
+      "id": "3",
+      "text": "Bài viết rất hữu ích!",
+      "postId": "3",
+      "isDeleted": false
+    },
+    {
+      "id": "4",
+      "text": "Cảm ơn vì chia sẻ",
+      "postId": "3",
+      "isDeleted": false
+    },
+    {
+      "id": "5",
+      "text": "Có thể giải thích chi tiết hơn không?",
+      "postId": "4",
+      "isDeleted": false
+    },
+    {
+      "id": "6",
+      "text": "Code ví dụ làm việc tốt",
+      "postId": "5",
+      "isDeleted": false
+    }
   ],
-  "maxPostId": 2,
-  "maxCommentId": 2,
+  "maxPostId": 5,
+  "maxCommentId": 6,
   "profile": {
     "name": "typicode"
   }
