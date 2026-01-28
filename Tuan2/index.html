@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Posts và Comments</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .section {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        button.delete {
+            background: #e74c3c;
+        }
+
+        button.delete:hover {
+            background: #c0392b;
+        }
+
+        button.restore {
+            background: #27ae60;
+        }
+
+        button.restore:hover {
+            background: #229954;
+        }
+
+        .items-list {
+            max-height: 500px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .item {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .item.deleted {
+            text-decoration: line-through;
+            opacity: 0.6;
+            background: #fff5f5;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-id {
+            color: #999;
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+
+        .item-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .item-text {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 3px;
+        }
+
+        .item-views {
+            color: #999;
+            font-size: 0.85em;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .item-actions button {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Quản Lý Posts và Comments</h1>
+
+        <div class="content">
+            <!-- POSTS SECTION -->
+            <div class="section">
+                <div class="section-title">📄 Posts</div>
+
+                <div class="form-group">
+                    <label for="postTitle">Tiêu đề *</label>
+                    <input type="text" id="postTitle" placeholder="Nhập tiêu đề bài viết">
+                </div>
+
+                <div class="form-group">
+                    <label for="postViews">Lượt xem</label>
+                    <input type="number" id="postViews" placeholder="Số lượt xem" value="0">
+                </div>
+
+                <button onclick="createPost()">➕ Thêm Post</button>
+                <button onclick="resetPostForm()">🔄 Đặt lại</button>
+
+                <div class="items-list" id="postsList"></div>
+            </div>
+
+            <!-- COMMENTS SECTION -->
+            <div class="section">
+                <div class="section-title">💬 Comments</div>
+
+                <div class="form-group">
+                    <label for="commentPostId">Post ID *</label>
+                    <select id="commentPostId">
+                        <option value="">Chọn Post</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="commentText">Bình luận *</label>
+                    <textarea id="commentText" placeholder="Nhập bình luận"></textarea>
+                </div>
+
+                <button onclick="createComment()">➕ Thêm Comment</button>
+                <button onclick="resetCommentForm()">🔄 Đặt lại</button>
+
+                <div class="items-list" id="commentsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
