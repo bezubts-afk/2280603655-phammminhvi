@@ -62,15 +62,18 @@ async function createPost() {
             body: JSON.stringify(newPost)
         });
 
-        if (response.ok) {
-            await updateMaxPostId(maxId + 1);
-            resetPostForm();
-            loadPosts();
-            updateCommentPostOptions();
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        await updateMaxPostId(maxId + 1);
+        resetPostForm();
+        loadPosts();
+        updateCommentPostOptions();
+        alert('✅ Tạo post thành công!');
     } catch (error) {
         console.error('Error creating post:', error);
-        alert('Lỗi khi tạo post!');
+        alert('❌ Lỗi khi tạo post! ' + error.message);
     }
 }
 
@@ -195,14 +198,17 @@ async function createComment() {
             body: JSON.stringify(newComment)
         });
 
-        if (response.ok) {
-            await updateMaxCommentId(maxId + 1);
-            resetCommentForm();
-            loadComments();
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        await updateMaxCommentId(maxId + 1);
+        resetCommentForm();
+        loadComments();
+        alert('✅ Tạo comment thành công!');
     } catch (error) {
         console.error('Error creating comment:', error);
-        alert('Lỗi khi tạo bình luận!');
+        alert('❌ Lỗi khi tạo bình luận! ' + error.message);
     }
 }
 
